@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# LINUS server ignore
+server/node_modules
+server/coverage

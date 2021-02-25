@@ -6,8 +6,12 @@ import mongoose from "mongoose";
 /** package-json: "type":"commonjs" (old way of including express) */
 // const express = require("express")
 
+
+
+
+
 /** package-json: "type":"module" (new way of including express) */
-import express from "express";
+import express, { response } from "express";
 /** CRUD: Create(application.post) Read(application.get) Update(application.put) Delete(application.delete)*/
 const application = express();
 
@@ -22,9 +26,7 @@ const checkIfAdmin = (request, response, next) => {
   console.log("---\n RAN: @checkIfAdmin \n---");
 
   /** http://localhost:3001/throw?username=linus */
-  console.log(
-    "request.query.username: " + request.query.username + " \n---"
-  );
+  console.log("request.query.username: " + request.query.username + " \n---");
   next();
 };
 application.use(checkIfAdmin);
@@ -39,6 +41,26 @@ application.get("/recipe", (request, response) => {
 application.get("/throw", (request, response) => {
   response.send(Math.random().toString());
 });
+
+/** 404 handeling */
+const notFound = (request, response, next) => {
+  const error = new Error("Invalid URL - NOT FOUND");
+  response.status(404);
+  next(error);
+};
+application.use(notFound);
+
+/** Error Handeling */
+const errorHandler = (error, request, response, next) => {
+  const statuscode = response.statuscode ? 500 : response.statuscode;
+  response.status(statuscode);
+  response.json({
+    statuscode: statuscode,
+    message: error.message,
+    stackTrace: error.stack,
+  });
+};
+application.use(errorHandler);
 
 // const url = "mongodb://localhost/namndb";
 const url = "mongodb://localhost:27017/namndb";

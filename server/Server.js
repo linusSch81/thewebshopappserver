@@ -1,88 +1,46 @@
-/** File is also normally called 'App.js', 'Index.js' or 'Server.js' */
-
-// const mongoose = require("mongoose");
-import mongoose from "mongoose";
-
-/** package-json: "type":"commonjs" (old way of including express) */
-// const express = require("express")
-
-
-
-
-
-/** package-json: "type":"module" (new way of including express) */
-import express, { response } from "express";
-/** CRUD: Create(application.post) Read(application.get) Update(application.put) Delete(application.delete)*/
-const application = express();
-
+/**
+ * This file is also normally called 'App.js', 'Index.js' or 'Server.js'
+ * package-json: "type":"commonjs" (old way of including express)
+ * //const express = require('express');
+ * package-json: "type":"module" (new way of including express)
+ * //import express from "express";
+ * 
+ * CRUD: Create(application.post) Read(application.get) Update(application.put) Delete(application.delete)
+ * - Create (POST) - Make something (application.post)
+ * - Read (GET)- Get something (application.get) 
+ * - Update (PUT) - Change something (application.put)
+ * - Delete (DELETE) - Remove something (application.delete)
+ * 
+ * application.get http://expressjs.com/en/api.html#app.get.method
+ * application.use http://expressjs.com/en/api.html#app.use
+ * 
+ */
+import express from "express";
 import helmet from "helmet";
-application.use(helmet());
-
 import morgan from "morgan";
+import Middlewares from "./src/middleware/Middleware.js";
+import Configuration from "./configurations/Configurations.js";
+
+const application = express();
+application.use(helmet());
 application.use(morgan("common"));
 
-/** Middleware functions - måste tala om när den ska ta slut med 'next': https://expressjs.com/en/guide/writing-middleware.html */
-const checkIfAdmin = (request, response, next) => {
-  console.log("---\n RAN: @checkIfAdmin \n---");
+application.use(Middlewares.checkIfAdmin);
 
-  /** http://localhost:3001/throw?username=linus */
-  console.log("request.query.username: " + request.query.username + " \n---");
-  next();
-};
-application.use(checkIfAdmin);
-
-/** http://localhost:3001/recipe */
-/** get hämta, 'request': hämta, 'response': vad vi vill skicka tillbaka */
+/** Read (GET):
+ * http://localhost:3001/recipe
+ * http://localhost:3001/throw
+ */
 application.get("/recipe", (request, response) => {
   response.send("Ditt API anrop gick igenom");
 });
-
-/** http://localhost:3001/throw */
 application.get("/throw", (request, response) => {
   response.send(Math.random().toString());
 });
 
-/** 404 handeling */
-const notFound = (request, response, next) => {
-  const error = new Error("Invalid URL - NOT FOUND");
-  response.status(404);
-  next(error);
-};
-application.use(notFound);
+/** 404 & error handeling */
+application.use(Middlewares.notFound);
+application.use(Middlewares.errorHandler);
 
-/** Error Handeling */
-const errorHandler = (error, request, response, next) => {
-  const statuscode = response.statuscode ? 500 : response.statuscode;
-  response.status(statuscode);
-  response.json({
-    statuscode: statuscode,
-    message: error.message,
-    stackTrace: error.stack,
-  });
-};
-application.use(errorHandler);
-
-// const url = "mongodb://localhost/namndb";
-const url = "mongodb://localhost:27017/namndb";
-mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() =>
-    console.log(
-      "\n--- SUCCESSFULLY CONNECTED TO THE DATABASE ---\n " + url + " \n---\n"
-    )
-  )
-  .catch((error) => {
-    console.log(
-      "\n--- ERROR WHILE TRYING TO CONNECT TO THE DATABASE ---\n " +
-        error +
-        " \n---\n"
-    );
-    process.exit();
-  });
-
-application.listen(3001, () => {
-  console.log("Server är igång på port " + 3001);
-});
+Configuration.connectToDatabase();
+Configuration.connectToPort(application);

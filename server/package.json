@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon Server.js"
+    "start": "brew services start mongodb-community@4.4;npx nodemon Server.js;",
+    "stop": "brew services stop mongodb-community@4.4"
   },
   "keywords": [
     "REST_API",
@@ -19,5 +20,11 @@
   "devDependencies": {
     "eslint": "^7.20.0",
     "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "mongoose": "^5.11.17",
+    "morgan": "^1.10.0"
   }
 }

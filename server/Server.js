@@ -18,13 +18,19 @@
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+// import bodyParser from "body-parser";
 import Middlewares from "./src/middleware/Middleware.js";
 import Configuration from "./configurations/Configurations.js";
+//
+import UserRoutes from "./src/routes/User.route.js"
 
 const application = express();
+application.use(express.json()) /** instead of bodyParser */
+
 application.use(helmet());
 application.use(morgan("common"));
 
+UserRoutes.routes(application)
 application.use(Middlewares.checkIfAdmin);
 
 /** Read (GET):

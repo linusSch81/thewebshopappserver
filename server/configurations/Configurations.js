@@ -9,11 +9,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 const { DATABASE_URL, PORT, ENVIRONMENT } = process.env;
-
-//const url = "mongodb://localhost:27017/namndb";
-//const PORT = 3001;
-const url = DATABASE_URL;
-const port = PORT;
 const connectToDatabase = async () => {
 	try {
 		await mongoose.connect(DATABASE_URL, {

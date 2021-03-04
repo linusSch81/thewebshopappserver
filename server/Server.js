@@ -16,8 +16,12 @@ import Configuration from "./configurations/Configurations.js";
 
 import UserRoutes from "./src/routes/User.route.js";
 
+import cors from "cors"
+
 const application = express();
 application.use(express.json()); /** Instead of bodyParser */
+
+application.use(cors({credentials: true}));
 
 application.use(helmet());
 application.use(morgan("common"));

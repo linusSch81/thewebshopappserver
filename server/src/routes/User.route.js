@@ -1,11 +1,13 @@
 import UserController from "../controllers/User.controller.js";
-
-/** vilken CRUD */
 const routes = (application) => {
 	application.post("/user", UserController.createUser);
 	application.get("/user", UserController.getAllUsers);
+	application.delete("/user/:userId", UserController.deleteUsers);
+	application.put("/user/:userId", UserController.updateUser);
+	application.get("/search", UserController.queryUsername);
+	application.get("/getuser/:userId", UserController.getUserById);
 };
 
 export default {
-	routes,
+	routes
 };

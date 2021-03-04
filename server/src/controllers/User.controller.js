@@ -33,7 +33,7 @@ const getAllUsers = async (request, response) => {
 		});
 	}
 };
-const deleteUsers = async (request, response) => {
+const deleteUser = async (request, response) => {
 	try {
 		const userId = request.params.userId;
 		const databaseResponse = await UserModel.findByIdAndDelete(userId);
@@ -97,7 +97,7 @@ const getUserById = async (request, response) => {
 export default {
 	createUser,
 	getAllUsers,
-	deleteUsers,
+	deleteUser,
 	updateUser,
 	queryUsername,
 	getUserById

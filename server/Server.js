@@ -27,7 +27,7 @@ application.use(helmet());
 application.use(morgan("common"));
 
 UserRoutes.routes(application);
-application.use(Middlewares.checkIfAdmin);
+// application.use(Middlewares.checkIfAdmin);
 
 /** Read (GET): */
 application.get("/", (request, response) => {
@@ -46,3 +46,7 @@ application.use(Middlewares.errorHandler);
 
 Configuration.connectToDatabase();
 Configuration.connectToPort(application);
+
+/** For unit testing ('/tests/User.test.js') devDependencies: mocha, chai, chai-http */
+export default application
+

@@ -5,23 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha 'tests/**'",
     "start": "brew services start mongodb-community@4.4;npx nodemon Server.js;",
     "stop": "brew services stop mongodb-community@4.4"
   },
   "keywords": [
     "REST_API",
     "Express",
-    "MongpDB",
+    "MongoDB",
     "Mongoose"
   ],
-  "author": "Linus Schölander (81linsch@gafe.molndal.se)",
+  "author": "Linus S (81linsch@gafe.molndal.se)",
   "license": "ISC",
-  "devDependencies": {
-    "eslint": "^7.20.0",
-    "eslint-config-prettier": "^8.1.0",
-    "nodemon": "^2.0.7"
-  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -29,5 +24,13 @@
     "helmet": "^4.4.1",
     "mongoose": "^5.11.17",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.1.0",
+    "nodemon": "^2.0.7",
+    "mocha": "^8.3.1",
+    "chai": "^4.3.3",
+    "chai-http": "^4.3.0"
   }
 }

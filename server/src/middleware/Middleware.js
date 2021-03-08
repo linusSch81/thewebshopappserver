@@ -7,6 +7,7 @@ dotenv.config();
 const { ENVIRONMENT } = process.env;
 
 /** '/throw?username=linus' */
+/*
 const checkIfAdmin = (request, response, next) => {
 	console.log(
 		"RAN: @checkIfAdmin \n request.query.username: " +
@@ -15,6 +16,7 @@ const checkIfAdmin = (request, response, next) => {
 	);
 	next();
 };
+*/
 
 /** 404 handeling */
 const notFound = (request, response, next) => {
@@ -39,7 +41,7 @@ const errorHandler = (error, request, response, next) => {
 };
 
 export default {
-	checkIfAdmin,
+	// checkIfAdmin,
 	notFound,
 	errorHandler,
 };

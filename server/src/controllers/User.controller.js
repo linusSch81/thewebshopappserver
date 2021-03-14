@@ -7,6 +7,7 @@ import { response } from "express";
 import UserModel from "../models/User.model.js";
 import StatusCode from "../../configurations/StatusCode.js";
 
+/** CRUD's: */
 const createUser = async (request, response) => {
 	const user = new UserModel({
 		username: request.body.username,
@@ -17,8 +18,9 @@ const createUser = async (request, response) => {
 		const databaseResponse = await user.save();
 		response.status(StatusCode.CREATED_201).send(databaseResponse);
 	} catch (error) {
-		status(StatusCode.INTERNAL_SERVER_ERROR_500).send({
-			message: "Error while trying to create user",
+		response.status(StatusCode.INTERNAL_SERVER_ERROR_500).send({
+			message:
+				"Error while trying to create user, User might already exist",
 			stack: error,
 		});
 	}
@@ -58,7 +60,9 @@ const updateUser = async (request, response) => {
 		const databaseResponse = await UserModel.findByIdAndUpdate(
 			userId,
 			data,
-			{ new: true } /** After running request returns the new updated values instead of showind the old values */
+			{
+				new: true,
+			} /** After running request returns the new updated values instead of showind the old values */
 		);
 		response.status(StatusCode.OK_200).send(databaseResponse);
 	} catch (error) {
@@ -100,5 +104,5 @@ export default {
 	deleteUser,
 	updateUser,
 	queryUsername,
-	getUserById
+	getUserById,
 };

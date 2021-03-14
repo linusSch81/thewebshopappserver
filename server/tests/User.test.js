@@ -8,7 +8,6 @@ import ChaiHTTP from "chai-http";
 import { describe, it as test } from "mocha";
 import StatusCode from "../configurations/StatusCode.js";
 import application from "../Server.js";
-// import StatusCode from "../configurations/StatusCode.js"
 
 Chai.should();
 Chai.use(ChaiHTTP);
@@ -20,8 +19,8 @@ const testingNonExistingRoute = () => {
 	// callback
 	test("HTTP call against a route that does not exist in the API", (done) => {
 		Chai.request(application)
-			// .get("/hahaha")
-			.get(`/${randomString}test`)
+			// .get("/return-404-error-please")
+			.get(`/${randomString}`)
 			.end((request, response) => {
 				response.should.have.a.status(StatusCode.NOT_FOUND_404);
 				done();

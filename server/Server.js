@@ -80,6 +80,13 @@ application.get("/", (request, response) => {
 	<li>
 		<strong>VIEW</strong> (<a href="https://github.com/linusSch81/thewebshopapp">thewebshopapp</a>): <a href="http://localhost:3000/thewebshopapp/admin/users"><strong><code>localhost:3000</code></strong></a>
 	</li>
+
+	<li>
+		Unit Testing: 
+		<ul><li>'./tests/User.test.js'. remember to shut server before running script <div>"<code>npm run test</code>"</div></li></ul>
+	</li>
+
+	
 </ul>
 <h1>Info</h1>
 <b>CRUD (Create, Read, Update, Delete)</b>

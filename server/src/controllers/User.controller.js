@@ -55,6 +55,7 @@ const updateUser = async (request, response) => {
 	const data = {
 		username: request.body.username,
 		password: request.body.password,
+		age: request.body.age,
 	};
 	try {
 		const databaseResponse = await UserModel.findByIdAndUpdate(
